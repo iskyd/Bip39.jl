@@ -1,4 +1,4 @@
-export generate_mnemonica
+export generate_mnemonic
 
 using Random
 using SHA
