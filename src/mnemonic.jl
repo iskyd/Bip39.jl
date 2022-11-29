@@ -5,7 +5,7 @@ using SHA
 
 VALID_STRENGHTS::Vector{UInt} = [128, 160, 192, 224, 256]
 
-struct MnemonicWords
+struct LanguageWordlist
     language::String
     wordlist::Vector{String} 
 end
@@ -67,19 +67,19 @@ function detect_language(mnemonic::Vector{String})::String
     unique_words::Vector{String} = unique(mnemonic)
     languages::Vector{String} = list_available_languages()
 
-    mnemonic_words::Vector{MnemonicWords} = []
+    possible::Vector{LanguageWordlist}
     for language in languages
         wordlist = [word for word in readlines("./src/wordlist/$(language).txt")]
-        push!(mnemonic_words, MnemonicWords(language, wordlist))
+        push!(possibilites, LanguageWordlist(language, wordlist))
     end
 
     for word in unique_words
-        mnemonic_words = [mnemonic_word for mnemonic_word in mnemonic_words if word in mnemonic_word.wordlist]
+        possible = [p for p in possible if word in p.wordlist]
 
-        if length(mnemonic_words) === 0 throw(DetectLanguageError("Language for mnemonic not found: $(join(mnemonic, ','))")) end
+        if length(possible) === 0 throw(DetectLanguageError("Language for mnemonic not found: $(join(mnemonic, ','))")) end
     end
 
-    if length(mnemonic_words) === 1 return mnemonic_words[1].language end
+    if length(possible) === 1 return possible[1].language end
 
     throw(DetectLanguageError("Language ambigous for mnemonic: $(join(mnemonic))"))
 end
