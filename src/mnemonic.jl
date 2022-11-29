@@ -19,7 +19,6 @@ function list_available_languages()::Vector{String}
 end
 
 function generate_mnemonic(strength::Int=256, language::String="english")::Vector{String}
-    print(@__DIR__)
     if !(strength in VALID_STRENGHTS)
         throw(ArgumentError("Invalid strength: $strength"))
     end
