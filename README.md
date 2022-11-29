@@ -4,8 +4,8 @@ Pure Julia implementation of Bitcoin BIP39: Mnemonic code for generating determi
 
 # Test
 
-[![Build Status](https://github.com/iskyd/Test.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/iskyd/Test.jl/actions/workflows/CI.yml?query=branch%3Amain)
-[![Coverage](https://codecov.io/gh/iskyd/Test.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/iskyd/Test.jl)
+[![Build Status](https://github.com/iskyd/BIP39.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/iskyd/BIP39.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Coverage](https://codecov.io/gh/iskyd/BIP39.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/iskyd/BIP39.jl)
 
 
 ## Run tests
