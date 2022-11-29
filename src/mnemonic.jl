@@ -68,10 +68,10 @@ function detect_language(mnemonic::Vector{String})::String
     unique_words::Vector{String} = unique(mnemonic)
     languages::Vector{String} = list_available_languages()
 
-    possible::Vector{LanguageWordlist}
+    possible::Vector{LanguageWordlist} = []
     for language in languages
         wordlist = [word for word in readlines(joinpath(@__DIR__, "wordlist", "$(language).txt"))]
-        push!(possibilites, LanguageWordlist(language, wordlist))
+        push!(possible, LanguageWordlist(language, wordlist))
     end
 
     for word in unique_words
