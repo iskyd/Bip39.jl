@@ -1,4 +1,4 @@
-export generate_mnemonic, check_mnemonic, detect_language
+export generate_mnemonic, check_mnemonic, detect_language, DetectLanguageError
 
 using Random
 using SHA
@@ -19,17 +19,18 @@ function list_available_languages()::Vector{String}
 end
 
 function generate_mnemonic(strength::Int=256, language::String="english")::Vector{String}
+    print(@__DIR__)
     if !(strength in VALID_STRENGHTS)
         throw(ArgumentError("Invalid strength: $strength"))
     end
 
-    wordlist = [word for word in readlines("./src/wordlist/$(language).txt")]
+    wordlist = [word for word in readlines(joinpath(@__DIR__, "wordlist", "$(language).txt"))]
 
     hex_str::String = randstring(RandomDevice(), ['0':'9'; 'a':'f'], div(strength, 4))
     bytes::Vector{UInt8} = hex2bytes(hex_str)
     h = bytes2hex(sha256(bytes))
 
-    b::String = join([  (b) for b in bytes], "") *
+    b::String = join([bitstring(b) for b in bytes], "") *
         join([bitstring(b) for b in hex2bytes(h)], "")[1: div(length(bytes) * 8, 32)]
 
     mnemonic::Vector{String} = Vector{String}(undef, div(length(b), 11))
@@ -69,7 +70,7 @@ function detect_language(mnemonic::Vector{String})::String
 
     possible::Vector{LanguageWordlist}
     for language in languages
-        wordlist = [word for word in readlines("./src/wordlist/$(language).txt")]
+        wordlist = [word for word in readlines(joinpath(@__DIR__, "wordlist", "$(language).txt"))]
         push!(possibilites, LanguageWordlist(language, wordlist))
     end
 
