@@ -1,4 +1,4 @@
-export generate_mnemonic, check_mnemonic, detect_language, DetectLanguageError
+export generate_mnemonic, detect_language, DetectLanguageError
 
 using Random
 using SHA
@@ -41,27 +41,27 @@ function generate_mnemonic(strength::Int=256, language::String="english")::Vecto
     return mnemonic
 end
 
-function check_mnemonic(mnemonic::Vector{String}, language::String="english")::Bool
-    if !(length(mnemonic) in [12, 15, 18, 21, 24]) return false end
+# function check_mnemonic(mnemonic::Vector{String}, language::String="english")::Bool
+#     if !(length(mnemonic) in [12, 15, 18, 21, 24]) return false end
 
-    wordlist::Array{String} = [word for word in readlines("./src/wordlist/$(language).txt")]
-    binary_str::String = ""
+#     wordlist::Array{String} = [word for word in readlines(joinpath(@__DIR__, "wordlist", "$(language).txt"))]
+#     binary_str::String = ""
 
-    for word in mnemonic
-        idx = findfirst(w -> w == word, wordlist)
-        if idx === nothing return false end
+#     for word in mnemonic
+#         idx = findfirst(w -> w == word, wordlist)
+#         if idx === nothing return false end
     
-        binary_idx = digits(idx, base=2, pad=11) |> reverse
-        binary_str *= join(binary_idx)
-    end
+#         binary_idx = digits(idx, base=2, pad=11) |> reverse
+#         binary_str *= join(binary_idx)
+#     end
 
-    print(binary_str)
+#     print(binary_str)
 
-    l = length(binary_str)
-    d = b[1:div(l, 33) * 32]
-    h = b[length(b) + div(-l, 33) + 1:end]
-    nd = parse(BigInt, d, base=2)
-end
+#     l = length(binary_str)
+#     d = binary_str[1:div(l, 33) * 32]
+#     h = binary_str[length(b) + div(-l, 33) + 1:end]
+#     nd = parse(BigInt, d, base=2)
+# end
 
 function detect_language(mnemonic::Vector{String})::String
     unique_words::Vector{String} = unique(mnemonic)
