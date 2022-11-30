@@ -1,4 +1,4 @@
-name = "BIP39"
+name = "Bip39"
 uuid = "513d1476-22ab-43b1-8671-226bf27d1d59"
 authors = ["iskyd <iskyd@proton.me>"]
 version = "0.1.0"
@@ -6,3 +6,6 @@ version = "0.1.0"
 [deps]
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+
+[compat]
+SHA = "0.7"
