@@ -1,4 +1,4 @@
-module BIP39
+module Bip39
 
 include("mnemonic.jl")
 
