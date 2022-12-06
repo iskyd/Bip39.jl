@@ -25,8 +25,8 @@ function generate_mnemonic(strength::Int=256, language::String="english")::Vecto
 
     wordlist = [word for word in readlines(joinpath(@__DIR__, "wordlist", "$(language).txt"))]
 
-    hex_str::String = randstring(RandomDevice(), ['0':'9'; 'a':'f'], div(strength, 4))
-    bytes::Vector{UInt8} = hex2bytes(hex_str)
+    entropy::String = randstring(RandomDevice(), ['0':'9'; 'a':'f'], div(strength, 4))
+    bytes::Vector{UInt8} = hex2bytes(entropy)
     sha = sha256(bytes)
 
     b::String = join([bitstring(b) for b in bytes], "") *
