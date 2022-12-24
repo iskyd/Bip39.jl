@@ -1,4 +1,4 @@
-export generate_mnemonic, detect_language, DetectLanguageError
+export generate_mnemonic, detect_language, check_mnemonic, DetectLanguageError
 
 using Random
 using SHA
