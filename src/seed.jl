@@ -7,12 +7,7 @@ function get_seed(mnemonic::Vector{String}, passphrase::Union{String, Nothing}=n
         throw(ArgumentError("Invalid mnemonic provided"))
     end
 
-    salt::String = "mnemonic"
-    if passphrase 
-        salt *= passphrase 
-    end
-
-    seed = Bip39.pbkdf2(join(mnemonic, " "), salt, 2048)
+    seed = Bip39.pbkdf2(join(mnemonic, " "), passphrase !== nothing ? passphrase : "")
 
     return seed
 end

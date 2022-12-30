@@ -1,26 +1,20 @@
 export pbkdf2
 
-using SHA
+using OpenSSL_jll
+using Libdl
 
-function pbkdf2(key::AbstractString, salt::String, iterations::Int, derived_key_length::Int)::Vector{UInt8}
-    hlen = trunc(Int, 512 / 8)
-    @assert derived_key_length % hlen === 0
-    derived_key = zeros(UInt8, derived_key_length)
-    nblocks = convert(Int, round(derived_key_length / hlen))
-    salt_bytes = Vector{UInt8}(salt)
+function pbkdf2(key::AbstractString, passphrase::AbstractString="")::String
+    salt = "mnemonic" * passphrase
 
-    for i in 1:nblocks
-        dk_block_i = pbkdf2_block(key, salt_bytes, iterations, i)
+    lc_h = OpenSSL_jll.libcrypto_handle
+    evp_sha512_fp = dlsym(lc_h, :EVP_sha512)
+    digest = ccall(evp_sha512_fp, Ptr{Cvoid}, ())
+    out = zeros(UInt8, 64)
 
-        offset = (i - 1) * hlen
-        for j = 1:hlen
-            derived_key[offset + j] = dk_block_i[j]
-        end
+    res = @ccall libcrypto.PKCS5_PBKDF2_HMAC(key::Cstring, length(key)::Cint, salt::Cstring, length(salt)::Cint, 2048::Cint, digest::Ptr{Cvoid}, 64::Cint, out::Ptr{Cchar})::Cint
+    if res != 1
+        throw(ArgumentError("Error in pbkdf2"))
     end
-    
-    return derived_key
-end
 
-function pbkdf2_block(key::AbstractString, salt::Vector{UInt8}, iterations::Int, i::Int)
-    
+    return bytes2hex(out)
 end
