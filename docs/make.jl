@@ -21,6 +21,5 @@ makedocs(;
 
 deploydocs(;
     repo="github.com/iskyd/Bip39.jl",
-    devbranch="dev",
     branch = "gh-pages",
 )
