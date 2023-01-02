@@ -1,0 +1,3 @@
+var documenterSearchIndex = {"docs":
+[{"location":"","page":"Home","title":"Home","text":"CurrentModule = Bip39","category":"page"},{"location":"#Bip39","page":"Home","title":"Bip39","text":"","category":"section"},{"location":"","page":"Home","title":"Home","text":"Pure Julia implementation of Bitcoin Bip39: Mnemonic code for generating deterministic keys.","category":"page"},{"location":"","page":"Home","title":"Home","text":"Documentation for Bip39.jl.","category":"page"},{"location":"","page":"Home","title":"Home","text":"","category":"page"},{"location":"","page":"Home","title":"Home","text":"Modules = [Bip39]","category":"page"}]
+}
